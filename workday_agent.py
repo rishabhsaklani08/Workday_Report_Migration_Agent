@@ -241,7 +241,7 @@ def parse_json_response(json_data: dict) -> list[dict]:
     tagged_reports = []
     skipped = 0
     for report in all_reports:
-        tag = report.get("Report_Tag", "")
+        tag = report.get("Report_Tags") or report.get("Report_Tag") or ""
         if tag and _AI_TAG_PATTERN.search(str(tag)):
             tagged_reports.append(report)
         else:
@@ -552,7 +552,7 @@ def process_reports(raw_reports: list[dict]) -> dict:
             "Category": report.get("Category", "N/A"),
             "Data_Source": report.get("Data_Source", "N/A"),
             "Report_Owner": report.get("Report_Owner", "N/A"),
-            "Report_Tag": report.get("Report_Tag", ""),
+            "Report_Tag": report.get("Report_Tags") or report.get("Report_Tag") or "",
             "Fields_Referenced_in_Report": report.get("Fields_Referenced_in_Report", ""),
             "Calculated_Fields_for_Report": report.get("Calculated_Fields_for_Report", ""),
             "Created_On": report.get("Created_On", "N/A"),
